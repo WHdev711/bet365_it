@@ -13,6 +13,14 @@ SPIDER_MODULES = ['bet365_it.spiders']
 NEWSPIDER_MODULE = 'bet365_it.spiders'
 
 
+DB_USER = ''
+DB_PASS = ''
+DB_HOST = ''
+DB_NAME = ''
+NOPROXY_FLAG = False
+RESIDENTIALS_FLAG = False
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'bet365_it (+http://www.yourdomain.com)'
 
