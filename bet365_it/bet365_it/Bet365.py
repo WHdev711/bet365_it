@@ -15,8 +15,8 @@ import urllib
 import math
 from decimal import Decimal
 import os
-from bet365_it.helpers.enums import *
-from bet365_it.helpers.BotBase import BotBase
+from bet365_it.items import *
+from bet365_it.BotBase import BotBase
 
 
 class Bet365(BotBase):

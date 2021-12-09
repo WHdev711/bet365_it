@@ -25,7 +25,7 @@ import functools
 import math
 import pytz
 import gc
-from bet365_it.helpers.enums import *
+from bet365_it.items import *
 from fuzzywuzzy import fuzz
 import fcntl
 
@@ -51,7 +51,6 @@ class BotBase(object):
         self.init_proxies()
         self.init_useragents()
         self.init_book_data()
-        self.set_running()
         
         self.threads = self.options.threads or 1
         self.blacklist_proxies = []
@@ -93,37 +92,16 @@ class BotBase(object):
             self.proxies_residential = [line.strip() for line in f.readlines()]
 
     def get_db(self):
-        db = mysql.connector.connect(user=self.options.username, password=self.options.password, database=self.options.database, host=self.options.host,unix_socket='/var/lib/mysql/mysql.sock')
+        db = mysql.connector.connect(user=self.options.username, password=self.options.password, database=self.options.database, host=self.options.host)
         db.autocommit = False
         
         return db
 
     def init_book_data(self):
-        db = self.get_db()
-        try:
-            sql = "SELECT id, name FROM bookies WHERE name LIKE '{0}'".format(self.bot_data["book_name"].lower())
-            cur = db.cursor()
-            cur.execute(sql)
-            rows = cur.fetchall()
-            cur.close()
-
-            self.bot_data["book_data"] = {
-                "id": str(rows[0][0]),
-                "name": rows[0][1],
-            }
-        finally:
-            db.close()
-
-    def set_running(self):
-        db = self.get_db()
-        try:
-            sql = "UPDATE bookies SET status=1, start_time=NOW() WHERE id={0}".format(self.bot_data["book_data"]["id"])
-            cur = db.cursor()
-            cur.execute(sql)
-            db.commit()
-            cur.close()
-        finally:
-            db.close()
+        self.bot_data["book_data"] = {
+            "id": '2',
+            "name": 'bet365',
+        }
 
     def get_response(self, url, headers, proxy=None, use_residential_proxies=False, post_data=None, post_is_json=False,no_proxy=False, timeout=4, cookies=None, use_tor=False):
         if no_proxy is False:
